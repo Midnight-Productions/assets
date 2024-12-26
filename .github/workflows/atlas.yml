@@ -1,0 +1,30 @@
+name: Update Atlas
+
+on:
+  schedule:
+    - cron: '0 7 */2 * *'
+    - cron: '0 22 */2 * *'
+
+jobs:
+  fetch-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Atlas Release Info
+        run: curl -o atlas.txt https://cdn.atlasclient.net/download/prod/latest/release-info
+
+      - name: Check for Changes
+        id: changes
+        run: |
+          git diff --exit-code atlas.txt || echo "changes detected"
+
+      - name: Commit and Push Update
+        if: steps.changes.outcome != 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add atlas.txt
+          git commit -m "Update atlas.txt"
+          git push
