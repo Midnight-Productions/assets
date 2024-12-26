@@ -21,12 +21,11 @@ jobs:
         run: curl -o atlas.txt https://cdn.atlasclient.net/download/prod/latest/release-info
 
       - name: Commit and Push Update
-        if: steps.changes.outcome != 'success'
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add atlas.txt
-          git commit -m "Update atlas.txt" || echo "No changes to commit"
+          git commit -m "Update atlas.txt"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
