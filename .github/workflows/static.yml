@@ -1,6 +1,10 @@
 name: Deploy static content to Pages
 
 on:
+  workflow_run:
+    workflows: ["Update versions.json"]
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
