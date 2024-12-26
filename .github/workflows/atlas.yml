@@ -20,11 +20,6 @@ jobs:
       - name: Fetch Atlas Release Info
         run: curl -o atlas.txt https://cdn.atlasclient.net/download/prod/latest/release-info
 
-      - name: Check for Changes
-        id: changes
-        run: |
-          git diff --exit-code atlas.txt || echo "changes detected"
-
       - name: Commit and Push Update
         if: steps.changes.outcome != 'success'
         run: |
