@@ -1,0 +1,33 @@
+name: Update versions list
+
+on:
+  schedule:
+    - cron: '30 18 * * 2,3,4'
+    - cron: '30 20 * * 2,3,4'
+    - cron: '30 21 * * 2,3,4'
+    - cron: '0 23 * * 2,3,4'
+    - cron: '30 0 * * 3,4,5'
+
+  workflow_dispatch:
+
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download versions.json
+        run: |
+          curl -o versions.json https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/refs/heads/master/versions.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add versions.json
+          git commit -m "Update versions.json"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
