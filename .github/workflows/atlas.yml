@@ -5,6 +5,11 @@ on:
     - cron: '0 7 */2 * *'
     - cron: '0 22 */2 * *'
 
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   fetch-and-upload:
     runs-on: ubuntu-latest
