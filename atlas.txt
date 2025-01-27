@@ -1,6 +1,6 @@
-version-code:1005002
-version-name:1.5.2
+version-code:1005003
+version-name:1.5.3
 latest-supported-version:1.21.51
-date-released:January 9, 2025
+date-released:January 26, 2025
 update-required:0
 show-upgrade-version-mismatch:0
